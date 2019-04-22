@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # Script to extract certificate and key files from PFX file.
 # Author: Thiago N Cavalcante
+# Deps: openssl package.
 
 import os
 import sys
