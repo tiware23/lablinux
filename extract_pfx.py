@@ -12,11 +12,9 @@ def clear_screen():
  
 def show_help():
     clear_screen()
-    print( """
-#################################################################
-# Usage: extract_pfx.py <certificate.pfx> <certificate_name> :D #  
-#################################################################
-    """)
+    print("#"*63)
+    print("Usage: extract_pfx.py <certificate.pfx> <certificate_name> :D #")  
+    print("#"*63)
  
 def extract_file(certificate_pfx=None, certificate_name=None):
     if certificate_pfx != None:
