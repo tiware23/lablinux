@@ -1,2 +1,7 @@
 src/index.php
 wwwroot/index.html
+wwwroot/tpl-footer.php
+wwwroot/header.php
+wwwroot/footer-em-movimento.php
+src/head.php
+src/header-em-movimento.php
