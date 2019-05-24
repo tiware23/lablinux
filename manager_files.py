@@ -15,8 +15,8 @@ def backup_of_file(ftp):
 
     with open("lista.txt", "r") as deploy_list_bkp:
         for lists in deploy_list_bkp:
-
             file_orig = lists.strip()
+            print(file_orig)
             file_orig_file = file_orig.split("/")
             print("Backup the follow files: {}".format(file_orig_file[-1]))
             print("#" * len(file_orig_file[-1]))
@@ -40,7 +40,6 @@ def upload_file(ftp):
     print_message_upload()
     with open("lista.txt", "r") as deploy_list_upload:
         for lists in deploy_list_upload:
-
             file_name = lists.strip()
             print("Uploading the follow files: {}".format(file_name))
 
@@ -49,9 +48,10 @@ def upload_file(ftp):
 
     print("Uploaded the Files")
 
-def manager_files(ftp):
+
+def manager_files():
     try:
-        os.mkdir(path_backup,0o775)
+        os.mkdir(path_backup, 0o775)
     except FileExistsError:
         print("The local backup Directory already exists!")
     else:
@@ -74,4 +74,4 @@ parser.add_argument("-p", "--password", help="FTP's password")
 args = parser.parse_args()
 
 if __name__ == "__main__":
-    manager_files("ftp")
+    manager_files()
