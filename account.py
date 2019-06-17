@@ -21,16 +21,32 @@ class Account:
 
     # Getters
 
-    def get_balance_account(self):
+    # def get_balance_account(self):
+    #     return self.__saldo
+    @property
+    def saldo(self):
         return self.__saldo
 
-    def get_customer_name(self):
+    # def get_customer_name(self):
+    #     return self.__titular
+
+    @property
+    def titular(self):
         return self.__titular
 
-    def get_limit_account(self):
+    # def get_limit_account(self):
+    #     return self.__limite
+    @property
+    def limite(self):
         return self.__limite
 
     # Setters
-
-    def set_limit_account(self, limite):
+    @limite.setter
+    def limite(self, limite):
         self.__limite = limite
+
+    # def set_limit_account(self, limite):
+    #     self.__limite = limite
+    #
+
+
