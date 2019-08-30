@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
 
-func main() {
+const monitoramento = 3
+const delay = 3
 
+func main() {
 	exibeIntroducao()
 	for {
 		exibeMenu()
@@ -40,6 +43,7 @@ func exibeMenu() {
 	fmt.Println("1- Iniciar Monitoramento")
 	fmt.Println("2- Exibir Logs")
 	fmt.Println("0- Sair do Programa")
+	fmt.Println("")
 }
 
 func leComando() int {
@@ -52,7 +56,27 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	site := "https://random-status-code.herokuapp.com"
+	//Array in GO
+	sites := []string{"https://random-status-code.herokuapp.com", "https://www.netshoes.com.br", "https://www.zattini.com.br"}
+	// A common for
+	// for i := 0; i < len(sites); i++ {
+	// 	fmt.Println(sites[i])
+	// }
+
+	for i := 0; i < monitoramento; i++ {
+		for _, site := range sites {
+			fmt.Println("Monitorando site:", site)
+			testSite(site)
+		}
+		fmt.Println("")
+		time.Sleep(delay * time.Second)
+	}
+
+	fmt.Println("")
+}
+
+func testSite(site string) {
+
 	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 || resp.StatusCode == 201 {
@@ -62,6 +86,17 @@ func iniciarMonitoramento() {
 	}
 }
 
+// Array and Slice with len and cap methods
+// func exibeNomes() {
+// 	nomes := []string{"Thiago", "Kats", "Kare"}
+// 	fmt.Println(len(nomes))
+// 	fmt.Println("Cap:", cap(nomes))
+
+// 	nomes = append(nomes, "Kelly")
+// 	fmt.Println(len(nomes))
+// 	fmt.Println("Cap:", cap(nomes))
+// }
+
 // return 2 values
 // func retornaIdadeENome() (string, int) {
 // 	nome := "Thiago"
@@ -69,3 +104,4 @@ func iniciarMonitoramento() {
 
 // 	return nome, idade
 // }
+
