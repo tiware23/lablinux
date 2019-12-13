@@ -1,0 +1,75 @@
+---
+- name: Install oracle java
+  yum:
+    name: jre1.8.0_121.x86_64
+    state: present
+
+- name: Create kafka user
+  user:
+    name: kafka
+    state: present
+    system: yes
+
+- name: Download Kafka
+  unarchive:
+    src: http://mirror.nbtelecom.com.br/apache/kafka/{{ kafka_version }}/kafka_{{ kafka_version_pkg }}.tgz
+    dest: /opt/
+    creates: /opt/kafka_{{ kafka_version_pkg }}
+    keep_newer: True
+    remote_src: True
+
+- name: Grant permissions on /opt/kafka_{{ kafka_version_pkg }}
+  file:
+    name: /opt/kafka_{{ kafka_version_pkg }}
+    state: directory
+    owner: kafka
+    group: kafka
+    mode: 0755
+
+- name: Create symlink to /opt/kafka_{{ kafka_version_pkg }}
+  file:
+    src: /opt/kafka_{{ kafka_version_pkg }}
+    dest: /opt/kafka
+    state: link
+
+- name: Configure Kafka Cluster
+  template:
+    src: server.properties.j2
+    dest: /opt/kafka/config/server.properties
+    owner: kafka
+    group: kafka
+    mode: 0644
+
+- name: Configure Kafka Start
+  template:
+    src: kafka-server-start.sh.j2
+    dest: /opt/kafka/bin/kafka-server-start.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create /var/lib/kafka/
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: kafka
+    group: kafka
+    mode: 0755
+  with_items:
+    - /var/lib/kafka
+    - /var/log/kafka
+
+- name: Create kafka.service systemd script
+  template:
+    src: kafka.service.j2
+    dest: /lib/systemd/system/kafka.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: Reload systemd
+
+- name: Start Kafka service and enable it on boot
+  service:
+    name: kafka
+    state: started
+    enabled: yes

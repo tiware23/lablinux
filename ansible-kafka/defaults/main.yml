@@ -1,0 +1,9 @@
+---
+# defaults file for ansible-freedom-kafka
+zookeeper_enable: false
+domain:
+kafka_main_dir: /var/lib/kafka
+kafka_heap_memory: "{{ (ansible_memfree_mb / 1.33)|int  }}"
+kafka_version:
+kafka_version_pkg:
+kafka_server_properties: false
