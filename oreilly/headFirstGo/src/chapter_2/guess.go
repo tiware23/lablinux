@@ -48,11 +48,6 @@ func main() {
 	}
 }
 
-// if the player's guess is less than the target
-// number, say, "Oops. Your guess was LOW." if the
-// the player's guess is greater than the target number,
-// say, "Oops. Your guess was HIGH."
-
 // Allow the player to guess up to 10 times. Before
 // each guess, let them know how many guesses they have left
 
