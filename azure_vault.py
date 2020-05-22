@@ -7,12 +7,12 @@ from azure.keyvault.secrets import SecretClient
 def clear_screen() -> None:
     os.system("cls" if os.name == "nt" else "clear")
 
-def print_secret_properties(secret_name: 'KeyVaultSecret'):
+def print_secret_properties(secret_name: 'KeyVaultSecret') -> None:
     print("Key vault Secret properties: ")
     print()
     print(f'Secret name: {secret_name.name}\nSecret Value: {secret_name.value}\nTags: {secret_name.properties.tags}')
 
-def set_vault(vault_url: str, vault_key: str, vault_value: str, vault_tags: str):
+def set_vault(vault_url: str, vault_key: str, vault_value: str, vault_tags: str) -> None:
     clear_screen()
     vault_tags_dict = dict(t.split("=") for t in vault_tags.split(";"))
     credential = DefaultAzureCredential()
