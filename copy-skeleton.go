@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -14,6 +15,14 @@ type dirName struct {
 
 type dirSkeleton struct {
 	name string
+}
+
+func flagsDir() (*string, *string) {
+
+	flagSkeleton := flag.String("dirskl", "skeleton-dotnet-chart", "Skeleton Directory")
+	flagApp := flag.String("dirapp", "Xpinc.Cards.WebhookService.Config", "Application Directory")
+
+	return flagSkeleton, flagApp
 }
 
 func checkError(err error) {
@@ -55,11 +64,14 @@ func loopFiles(typeFile templateFile, dir string, dirSkelton string) {
 
 func main() {
 
-	dirRepo := dirName{name: "Xpinc.Cards.WebhookService.Config"}
-	dirTemplates := dirName{name: "Xpinc.Cards.WebhookService.Config/templates"}
+	flagSkeleton, flagApp := flagsDir()
+	flag.Parse()
 
-	dirSkeletonRoot := dirSkeleton{name: "./skeleton-dotnet-chart/"}
-	dirSkeletonTemplate := dirSkeleton{name: "./skeleton-dotnet-chart/templates/"}
+	dirRepo := dirName{name: *flagApp + "/"}
+	dirTemplates := dirName{name: *flagApp + "/" + "templates"}
+
+	dirSkeletonRoot := dirSkeleton{name: *flagSkeleton + "/"}
+	dirSkeletonTemplate := dirSkeleton{name: *flagSkeleton + "/" + "templates" + "/"}
 
 	files := templateFile{
 		"configmap.yaml",
